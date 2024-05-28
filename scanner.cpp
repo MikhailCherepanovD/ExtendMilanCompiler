@@ -21,6 +21,8 @@ static const char * tokenNames_[] = {
         "'OD'",
         "'WRITE'",
         "'READ'",
+        "ENUM",
+        "ENDENUM",
         "':='",
         "'+' or '-'",
         "'*' or '/'",
@@ -28,6 +30,7 @@ static const char * tokenNames_[] = {
         "'('",
         "')'",
         "';'",
+        "','",
 };
 
 void Scanner::nextToken()
@@ -122,6 +125,10 @@ void Scanner::nextToken()
                 nextChar();
                 break;
                 //Признак лексемы ";" - встретили ";"
+            case ',':
+                token_ = T_COMMA;
+                nextChar();
+                break;
             case ';':
                 token_ = T_SEMICOLON;
                 nextChar();

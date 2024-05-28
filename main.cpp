@@ -12,7 +12,10 @@ void printHelp() {
 
 int main() {
     ifstream input;
-    input.open("input.txt");
+    //input.open("input1.txt");
+    //input.open("input2.txt");
+    input.open("input3err.txt");
+    //input.open("input4err.txt");
     if(input) {
         Parser p("input.txt", input);
         p.parse();

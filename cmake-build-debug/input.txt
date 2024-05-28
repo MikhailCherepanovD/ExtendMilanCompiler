@@ -1,4 +1,0 @@
-begin
-a:=123;
-b:=a
-end

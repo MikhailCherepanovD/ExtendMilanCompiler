@@ -23,14 +23,17 @@ enum Token {
     T_OD,			// Ключевое слово "od"
     T_WRITE,		// Ключевое слово "write"
     T_READ,			// Ключевое слово "read"
-    T_ENUM,         // Ключевое слово "e
+    T_ENUM,         // Ключевое слово "enum"
+    T_END_ENUM,     // Ключевое слово "endenum"
     T_ASSIGN,		// Оператор ":="
     T_ADDOP,		// Сводная лексема для "+" и "-" (операция типа сложения)
     T_MULOP,		// Сводная лексема для "*" и "/" (операция типа умножения)
     T_CMP,			// Сводная лексема для операторов отношения
     T_LPAREN,		// Открывающая скобка
     T_RPAREN,		// Закрывающая скобка
-    T_SEMICOLON		// ";"
+    T_SEMICOLON,    // ";"
+    T_COMMA         // ","
+
 };
 
 // Функция tokenToString возвращает описание лексемы.
@@ -77,6 +80,8 @@ public:
         keywords_["od"] = T_OD;
         keywords_["write"] = T_WRITE;
         keywords_["read"] = T_READ;
+        keywords_["enum"] = T_ENUM;
+        keywords_["endenum"] = T_END_ENUM;
 
         nextChar();
     }

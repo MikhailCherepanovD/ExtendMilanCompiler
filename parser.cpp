@@ -98,6 +98,12 @@ void Parser::statement()
         mustBe(T_RPAREN);
         codegen_->emit(PRINT);
     }
+    else if(match(T_ENUM)){
+        mustBe(T_LPAREN);
+        enumeration();
+        mustBe(T_RPAREN);
+
+    }
     else {
         reportError("statement expected.");
     }
@@ -242,6 +248,20 @@ int Parser::findOrAddVariable(const string& var)
         return it->second;
     }
 }
+bool Parser::checkAlreadyInitialized(const string& var){
+    VarTable::iterator it = variables_.find(var);
+    return !(it == variables_.end());
+
+}
+
+int Parser::AddVariableWithoutChecking(const string& var){
+    variables_[var] = lastVar_;
+    return lastVar_++;
+}
+
+
+
+
 
 void Parser::mustBe(Token t)
 {
@@ -268,3 +288,81 @@ void Parser::recover(Token t)
         next();
     }
 }
+
+
+
+void Parser::enumeration() {
+    int currentValEnum=0;
+    //codegen_->emit(PUSH, currentValEnum);
+
+    bool more = 1;
+    bool flagFirstIteration=1;
+    while (more) {
+        if(see(T_IDENTIFIER)){
+            string varName=scanner_->getStringValue();
+            if(checkAlreadyInitialized(varName)) {
+                reportError("Variable already exist.");
+            }                                                               // если такой переменной еще нет
+            int varAddress = AddVariableWithoutChecking(varName);      // сохранили переменную, получили адрес
+            next();
+            if (match(T_ASSIGN)) {
+                expression();
+                codegen_->emit(STORE, varAddress);
+            }
+            else{
+                if(flagFirstIteration){
+                    codegen_->emit(PUSH, currentValEnum);
+                    codegen_->emit(STORE, varAddress);
+                }
+                else{
+                    codegen_->emit(LOAD, varAddress-1);
+                    codegen_->emit(PUSH, 1);
+                    codegen_->emit(ADD);
+                    codegen_->emit(STORE, varAddress);
+                }
+            }
+        }
+        else{
+            reportError("Identifier expected.");
+            while(!see(T_COMMA) && !see(T_RPAREN) && !see(T_END))
+                next();
+        }
+        more = match(T_COMMA);
+        flagFirstIteration=0;
+    }
+
+
+}
+
+
+/*
+if(see(T_IDENTIFIER)) {
+int varAddress = findOrAddVariable(scanner_->getStringValue());
+next();
+mustBe(T_ASSIGN);
+expression();
+codegen_->emit(STORE, varAddress);
+}
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
