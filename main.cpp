@@ -12,16 +12,18 @@ void printHelp() {
 
 int main() {
     ifstream input;
-    //input.open("input1.txt");
-    //input.open("input2.txt");
-    input.open("input3err.txt");
-    //input.open("input4err.txt");
+    string file_name="input1.txt";
+    //string file_name="input2.txt";
+    //string file_name="input3err.txt";
+    //string file_name="input4err.txt";
+    input.open(file_name);
+
     if(input) {
-        Parser p("input.txt", input);
+        Parser p(file_name, input);
         p.parse();
         return EXIT_SUCCESS;
     } else {
-        cerr << "File 'input.txt' not found" << endl;
+        cerr << "File "<< file_name<< " not found" << endl;
         return EXIT_FAILURE;
     }
 }

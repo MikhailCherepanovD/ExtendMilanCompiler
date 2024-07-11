@@ -1,12 +1,8 @@
 begin
-a:=read;
-b:=read;
 enum(
-e1:=a,
-e2,
-e3:=b,
-e4
-);
-res:=e2+e4;
+a:=(1+2)*23,
+b,
+c);
+res := a+b+c;
 write(res)
-end   /* Ожидаемый вывод: a+b+2 */
+end

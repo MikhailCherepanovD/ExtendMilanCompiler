@@ -22,7 +22,6 @@ static const char * tokenNames_[] = {
         "'WRITE'",
         "'READ'",
         "ENUM",
-        "ENDENUM",
         "':='",
         "'+' or '-'",
         "'*' or '/'",

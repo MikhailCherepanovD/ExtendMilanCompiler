@@ -4,7 +4,7 @@ a1:=2;
 enum(
 b:=1,
 a:=2,
-a1,
+a1
 a2
 );
 write(a)
